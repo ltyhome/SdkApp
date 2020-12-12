@@ -1,0 +1,26 @@
+buildscript {
+    ext.gradle_version = '4.2.0-alpha16'
+    ext.kotlin_version = "1.4.10"
+    ext.andresguard_version = '1.2.18'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.tencent.mm:AndResGuard-gradle-plugin:$andresguard_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

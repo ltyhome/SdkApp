@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+group='com.github.ltyhome'
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs = ["-Xinline-classes"]
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api 'androidx.core:core-ktx:1.3.2'
+    api "com.tencent:mmkv-static:1.1.2"
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    api 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01'
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'
+    api "com.sagar:coroutinespermission:2.0.2"
+    api 'com.squareup.okhttp3:okhttp:4.9.0'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    api 'jp.wasabeef:glide-transformations:4.1.0'
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
+    api 'com.google.android.material:material:1.3.0-alpha04'
+    api 'com.just.agentweb:agentweb:4.1.3'
+    api 'me.jessyan:autosize:1.2.1'
+    api 'com.just.agentweb:agentweb:4.1.3'
+}

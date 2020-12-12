@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId "com.xjh.xinwo"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    androidExtensions {
+        experimental = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs = ["-Xinline-classes"]
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation project(":library")
+    implementation files("libs/agora-ktv-kit-release.aar")
+    implementation 'com.netease.nimlib:basesdk:8.0.1'
+    implementation 'com.netease.nimlib:chatroom:8.0.1'
+    implementation 'com.netease.nimlib:push:8.0.1'
+    implementation 'com.netease.nimlib:superteam:8.0.1'
+    implementation 'com.netease.nimlib:lucene:8.0.1'
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.9'
+}
