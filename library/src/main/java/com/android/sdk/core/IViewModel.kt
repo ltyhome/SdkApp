@@ -9,7 +9,9 @@ import com.android.sdk.exception.ResponseThrowable
 import com.android.sdk.exception.handleException
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-
+import retrofit2.HttpException
+import retrofit2.Response
+@ExperimentalCoroutinesApi
 abstract class IViewModel:ViewModel(), LifecycleObserver {
      val defUI: UIChange by lazy { UIChange() }
     /**
@@ -24,6 +26,28 @@ abstract class IViewModel:ViewModel(), LifecycleObserver {
         return flow {
             emit(block())
         }
+    }
+    
+    fun <T> launch(block: suspend () -> Response<T>, error: () -> Unit = {}):SingleLiveEvent<T>{
+        val response = SingleLiveEvent<T>()
+        launchUI {
+            launchFlow(block).flowOn(Dispatchers.IO).onEach {
+                if(!it.isSuccessful)
+                    throw HttpException(it)
+            }.onStart {
+                defUI.showLoading.postValue(true)
+            }.onCompletion {
+                defUI.showLoading.postValue(false)
+            }.onEach {
+                response.value = it.body()
+            }.catch { e ->
+                error()
+                if(e is HttpException)
+                    defUI.showToast.postValue(ErrorToast(e.message()))
+                e.printStackTrace()
+            }.collect()
+        }
+        return response
     }
     /**
      * 通用处理
